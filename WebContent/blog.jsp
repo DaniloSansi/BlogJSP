@@ -1,132 +1,130 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
- pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Blog</title> 
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	
+<!-- Icons -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" 
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" 
+	crossorigin="anonymous">
+<title>Blog</title>
 </head>
 <style>
-
-/*body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}*/
-
-.header{
-	height:100px;
-	width:auto;
-	background-color: #4F78C0;
-	border-radius:10px;
-	
-	display: flex;
-	justify-content: center; /* align horizontal */
-	align-items: center; /* align vertical */
-
-}
-
-.menu-box {
-  background-color: white;
-  margin-top: 5px;
-}
-
-.menu-box a{
-  float: right;
-  color: #4F78C0;
-  text-align: center;
-  padding: 10px 10px;
-  text-decoration: none;
-  font-size: 20px;
-
-}
-
-.menu-box a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.menu-box a.active {
-  background-color: #4F78C0;
-  color: white;
-}
-
-.body-page{
-  position: fixed;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.split-left {
-
-  width: 70%;
-  margin-top:55px;
-  left: 0;
-  background-color: gray;
-}
-
-.split-right {
-  height: 100%;
-  width: 30%;
-  margin-top:55px;
-  right: 0;
-  background-color: lightgrey;
-}
-
-.centered {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
 
 </style>
 
 <body>
+	<div class="jumbotron jumbotron-fluid mb-1"
+		style="background-image: url('https://i.ytimg.com/vi/2v3YSRqWP0A/maxresdefault.jpg');">
 
-  <div class="header">
-   		<h1>Z Blog</h1>
-  </div>
-  
-  <div class="menu-box">
+		<div class="container text-center">
+			<h1 class="display-4 text-light">Blog 235</h1>
+		</div>
+	</div>
+
+	<div class="justify-content-end">
+		<ul class="nav nav-pills justify-content-end" role="tablist">
+			<li class="nav-item"><a class="nav-link active"
+				data-toggle="pill" href="#home">Home</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="pill"
+				href="#menu1">Post</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="pill"
+				href="#menu2">About</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="pill"
+				href="#menu2">Contact</a></li>
+		</ul>
+	</div>
+
+
+	<div class="container-fluid">
+		<div class="row">
+		
+			<div class="col-md-9">
+				<div class="tab-content">
+					<div id="home" class="container tab-pane active">
+						<br>
+						<h3>Recent Posts</h3>
+						<c:forEach var="post" items="${listPost}">
+							<div class="divTableRow">
+								<div class="divTableCell">
+									<span class="font-weight-bold">Category Title :</span>
+									<span class="font-weight-bold text-info"><c:out value="${post.getCat_title()}" /></span>
+								</div>
+								<div class="divTableCell">
+									<c:out value="${post.getPost_title()}" />
+								</div>
+								<div class="divTableCell">
+									<c:out value="${post.getPost_body()}" />
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+					<div id="menu1" class="container tab-pane fade">
+						<br>
+						<h3>Posts</h3>
+						<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco
+							laboris nisi ut aliquip ex ea commodo consequat.</p>
+					</div>
+					<div id="menu2" class="container tab-pane fade">
+						<br>
+						<h3>About</h3>
+						<p>Sed ut perspiciatis unde omnis iste natus error sit
+							voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+				<div class="card bg-light mt-3" style="max-width: 18rem;">
+				
+					<div class="card-body ">
+						<div class="input-group mb-2">
+							<input type="text" class="form-control" id="inlineFormInputGroup"
+								placeholder="Search">
+							<div class="input-group-prepend">	
+								<button type="button" class="btn btn-info"><i class="fas fa-search"></i></button>
+							</div>
+
+						</div>
+						<p class="card-text">This is a blog for discussing web debelopment</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--   <div class="menu-box">
     <a href="#about">Contact</a>
     <a href="#contact">About</a>
     <a href="#news">Post</a>
 	<a class="active" href="#home">Home</a>
-  </div>
-  
-	<div class="body-page split-left">
-	  <div class="">
-	    <h2>Recent posts</h2>
-	    
-			<c:forEach var="post" items="${listPost}">
-				<div class="divTableRow">
-					<div class="divTableCell">Category Title : <c:out value="${post.getCat_title()}" /></div>
-					<div class="divTableCell"><c:out value="${post.getPost_title()}" /></div>
-					<div class="divTableCell"><c:out value="${post.getPost_body()}" /></div>	
-				</div>
-			
-			</c:forEach>
-			
-	  </div>
-	</div>
-	
-	<div class="body-page split-right">
-	  <div class="centered">
-	    <p><input type="text" placeholder="search in the blog"></input><input type="button"></input> </p>
-	    <p>This is a blog for discussing web development</p>
-	  </div>
-	</div>
-
+  </div> -->
 
 </body>
-<script>
-
- 
-</script>
+<!-- Optional JavaScript bootstrap -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
 </html>
