@@ -29,10 +29,10 @@
 
 <body>
 	<div class="jumbotron jumbotron-fluid mb-1"
-		style="background-image: url('https://i.ytimg.com/vi/2v3YSRqWP0A/maxresdefault.jpg');">
+		style="background-image: url('https://wallpaperplay.com/walls/full/a/3/0/71487.jpg');background-size: 100%;">
 
 		<div class="container text-center">
-			<h1 class="display-4 text-light">Blog 235</h1>
+			<h1 class="display-4 text-light font-weight-bold">Blog 235</h1>
 		</div>
 	</div>
 
