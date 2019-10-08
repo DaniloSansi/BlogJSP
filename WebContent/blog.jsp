@@ -16,20 +16,20 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
-	
+
 <!-- Icons -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" 
-	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" 
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
 <title>Blog</title>
 </head>
 <style>
-
 </style>
 
 <body>
 	<div class="jumbotron jumbotron-fluid mb-1"
-		style="background-image: url('https://wallpaperplay.com/walls/full/a/3/0/71487.jpg');background-size: 100%;">
+		style="background-image: url('https://wallpaperplay.com/walls/full/a/3/0/71487.jpg'); background-size: 100%;">
 
 		<div class="container text-center">
 			<h1 class="display-4 text-light font-weight-bold">Blog 235</h1>
@@ -50,9 +50,10 @@
 	</div>
 
 
+
 	<div class="container-fluid">
 		<div class="row">
-		
+
 			<div class="col-md-9">
 				<div class="tab-content">
 					<div id="home" class="container tab-pane active">
@@ -61,8 +62,9 @@
 						<c:forEach var="post" items="${listPost}">
 							<div class="divTableRow">
 								<div class="divTableCell">
-									<span class="font-weight-bold">Category Title :</span>
-									<span class="font-weight-bold text-info"><c:out value="${post.getCat_title()}" /></span>
+									<span class="font-weight-bold">Category Title :</span> <span
+										class="font-weight-bold text-info"><c:out
+											value="${post.getCat_title()}" /></span>
 								</div>
 								<div class="divTableCell">
 									<c:out value="${post.getPost_title()}" />
@@ -84,23 +86,42 @@
 						<h3>About</h3>
 						<p>Sed ut perspiciatis unde omnis iste natus error sit
 							voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="col-md-3">
 				<div class="card bg-light mt-3" style="max-width: 18rem;">
-				
+
 					<div class="card-body ">
 						<div class="input-group mb-2">
 							<input type="text" class="form-control" id="inlineFormInputGroup"
 								placeholder="Search">
-							<div class="input-group-prepend">	
-								<button type="button" class="btn btn-info"><i class="fas fa-search"></i></button>
+							<div class="input-group-prepend">
+								<button type="button" class="btn btn-info">
+									<i class="fas fa-search"></i>
+								</button>
 							</div>
 
 						</div>
-						<p class="card-text">This is a blog for discussing web debelopment</p>
+						<p class="card-text">This is a blog for discussing web
+							debelopment</p>
+
+					</div>
+				</div>
+
+				<div class="card bg-light mt-3" style="max-width: 18rem;">
+
+					<div class="card-body ">
+						<div class="input-group mb-2">
+							<button type="button" class="btn btn-info btn-lg btn-block">Create New Post</button>
+							<button type="button" class="btn btn-info btn-lg btn-block">Create New Category</button>
+							<button type="button" class="btn btn-info btn-lg btn-block">Edit Contact</button>
+							<button type="button" class="btn btn-info btn-lg btn-block">Edit About</button>		
+							<button type="button" class="btn btn-info btn-lg btn-block">Old Post List</button>
+							<button type="button" class="btn btn-info btn-lg btn-block">LogOut</button>													
+						</div>
 					</div>
 				</div>
 			</div>
@@ -127,4 +148,5 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
+
 </html>
