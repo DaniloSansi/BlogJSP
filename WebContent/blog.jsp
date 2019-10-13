@@ -28,6 +28,33 @@
 </style>
 
 <body>
+
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+		<a class="navbar-brand" href="#">Blog 235</a>
+		<button class="navbar-toggler navbar-toggler-right" type="button"
+			data-toggle="collapse" data-target="#navb" aria-expanded="true">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div id="navb" class="navbar-collapse collapse hide">
+			<ul class="nav navbar-nav ml-auto">
+				<c:choose>
+					<c:when test="${not empty username}">
+
+						<li class="nav-item"><a class="nav-link" href="#">${username}</a></li>
+						<li class="nav-item"><a class="nav-link" href="#"
+							onClick="LogOut()"><span class="fas fa-sign-out-alt"></span>
+								Logout</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link" href="#"
+							onClick="LoginPage()"><span class="fas fa-sign-in-alt"></span>
+								Login</a></li>
+					</c:otherwise>
+				</c:choose>
+
+			</ul>
+		</div>
+	</nav>
 	<div class="jumbotron jumbotron-fluid mb-1"
 		style="background-image: url('https://wallpaperplay.com/walls/full/a/3/0/71487.jpg'); background-size: 100%;">
 
@@ -115,12 +142,17 @@
 
 					<div class="card-body ">
 						<div class="input-group mb-2">
-							<button type="button" class="btn btn-info btn-lg btn-block">Create New Post</button>
-							<button type="button" class="btn btn-info btn-lg btn-block">Create New Category</button>
-							<button type="button" class="btn btn-info btn-lg btn-block">Edit Contact</button>
-							<button type="button" class="btn btn-info btn-lg btn-block">Edit About</button>		
-							<button type="button" class="btn btn-info btn-lg btn-block">Old Post List</button>
-							<button type="button" class="btn btn-info btn-lg btn-block">LogOut</button>													
+							<button type="button" class="btn btn-info btn-lg btn-block">Create
+								New Post</button>
+							<button type="button" class="btn btn-info btn-lg btn-block">Create
+								New Category</button>
+							<button type="button" class="btn btn-info btn-lg btn-block">Edit
+								Contact</button>
+							<button type="button" class="btn btn-info btn-lg btn-block">Edit
+								About</button>
+							<button type="button" class="btn btn-info btn-lg btn-block">Old
+								Post List</button>
+							<button type="button" class="btn btn-info btn-lg btn-block">LogOut</button>
 						</div>
 					</div>
 				</div>
@@ -135,6 +167,19 @@
   </div> -->
 
 </body>
+<script>
+	function LoginPage() {
+		window.open("Login.jsp", "_self");
+	}
+
+	function LogOut() {
+		console.log('logging out');
+		//HttpSession session = request.getSession(true).
+		//session.removeAttribute("username")
+
+
+	}
+</script>
 <!-- Optional JavaScript bootstrap -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
