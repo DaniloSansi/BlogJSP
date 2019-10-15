@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mvccrudpackage.model.bean.Category;
 import mvccrudpackage.model.bean.Post;
 import mvccrudpackage.model.dao.PostDAO;
 import java.sql.SQLException;
@@ -69,6 +70,9 @@ public class PostServerlet extends HttpServlet {
 			case "/update":
 				updatePost(request, response);
 				break;
+			case "/BlogPrj/Post":
+				createPost(request, response);
+				break;				
 			default:
 				listPost(request, response);
 				break;
@@ -86,6 +90,14 @@ public class PostServerlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	private void createPost(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		List<Category> listCategory = empDAO.selectAllCategories();
+		request.setAttribute("listCategory", listCategory);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("Post.jsp");
+		dispatcher.forward(request, response);
+	}
+	
 	private void showNewPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("postform.jsp");

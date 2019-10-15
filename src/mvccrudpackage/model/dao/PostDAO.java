@@ -2,6 +2,8 @@ package mvccrudpackage.model.dao;
 
 import java.sql.*;
 import java.util.*;
+
+import mvccrudpackage.model.bean.Category;
 import mvccrudpackage.model.bean.Post;
 
 public class PostDAO {
@@ -13,6 +15,7 @@ public class PostDAO {
 	private String SELECTEMPID = "select post_id, cat_id, post_title, post_keywords, post_body, published from POST post_id =?";
 	private String SELECTALLPOSTS = "select p.post_id, p.cat_id, p.post_title, p.post_keywords, p.post_body, p.published,c.cat_title"+
 	                                " from POST p INNER JOIN CATEGORY c ON p.cat_id = c.cat_id";
+	private String SELECTALLCATEGORIES = "select * from category";
 	private String DELETEEMPSQL = "delete from POST where post_id =?;";
 	private String UPDATEEMPSQL = "update POST set Ename = ?,Eage=? where Eid = ?;";
 
@@ -127,6 +130,33 @@ public class PostDAO {
 		return posts;
 	}
 
+	public List<Category> selectAllCategories() {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		List<Category> categories = new ArrayList<>();
+
+		try {
+			connection = getConnection();
+			preparedStatement = connection.prepareStatement(SELECTALLCATEGORIES);
+			System.out.println(preparedStatement);
+			rs = preparedStatement.executeQuery();
+			
+			while (rs.next()) {
+				int Post_id = rs.getInt("cat_id");
+				String Cat_id = rs.getString("cat_title");
+				categories.add(new Category(Post_id, Cat_id ));
+			}
+		} catch (SQLException e) {
+			printSQLException(e);
+		} finally {
+			finallySQLException(connection, preparedStatement, rs);
+		}
+		return categories;
+	}
+	
 	public boolean deletePost(int id) throws SQLException {
 		boolean postDeleted = false;
 		Connection connection = null;

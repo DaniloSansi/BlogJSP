@@ -55,6 +55,7 @@
 			</ul>
 		</div>
 	</nav>
+	
 	<div class="jumbotron jumbotron-fluid mb-1"
 		style="background-image: url('https://wallpaperplay.com/walls/full/a/3/0/71487.jpg'); background-size: 100%;">
 
@@ -75,8 +76,6 @@
 				href="#menu2">Contact</a></li>
 		</ul>
 	</div>
-
-
 
 	<div class="container-fluid">
 		<div class="row">
@@ -138,24 +137,31 @@
 					</div>
 				</div>
 
-				<div class="card bg-light mt-3" style="max-width: 18rem;">
+				<c:choose>
+					<c:when test="${not empty username}">
+						<div class="card bg-light mt-3" style="max-width: 18rem;">
 
-					<div class="card-body ">
-						<div class="input-group mb-2">
-							<button type="button" class="btn btn-info btn-lg btn-block">Create
-								New Post</button>
-							<button type="button" class="btn btn-info btn-lg btn-block">Create
-								New Category</button>
-							<button type="button" class="btn btn-info btn-lg btn-block">Edit
-								Contact</button>
-							<button type="button" class="btn btn-info btn-lg btn-block">Edit
-								About</button>
-							<button type="button" class="btn btn-info btn-lg btn-block">Old
-								Post List</button>
-							<button type="button" class="btn btn-info btn-lg btn-block">LogOut</button>
+							<div class="card-body ">
+								<div class="input-group mb-2">
+									<button type="button" onClick="Post()" class="btn btn-info btn-lg btn-block">Create
+										New Post</button>
+									<button type="button" class="btn btn-info btn-lg btn-block">Create
+										New Category</button>
+									<button type="button" class="btn btn-info btn-lg btn-block">Edit
+										Contact</button>
+									<button type="button" class="btn btn-info btn-lg btn-block">Edit
+										About</button>
+									<button type="button" class="btn btn-info btn-lg btn-block">Old
+										Post List</button>
+									<button type="button" class="btn btn-info btn-lg btn-block">LogOut</button>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
+					</c:when>
+				</c:choose>
+
+
+
 			</div>
 		</div>
 	</div>
@@ -173,12 +179,54 @@
 	}
 
 	function LogOut() {
-		console.log('logging out');
-		//HttpSession session = request.getSession(true).
-		//session.removeAttribute("username")
-
+		window.open("LogOut.jsp", "_self");
+	}
+	
+	function Post() {
+		//window.open("Post.jsp", "_self");
+		console.log('Posting ....')
+		
+		/*var xhr = new XMLHttpRequest();
+		xhr.open("POST", 'blog.jsp', true);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify({
+		    value: null
+		}));
+		
+		xhr.addEventListener('load', e => 
+		    console.log(e)
+				
+		);
+		  
+		xhr.addEventListener('error', function(event) {
+			    alert('Oops! Something went wrong executing post.');
+		});*/
+		/*var ajaxRequest = new Ajax.Request('blog.jsp', {
+		    method:       'post', 
+		    parameters:   {}, 
+		    asynchronous: true,
+		    onComplete:   showResponse
+		});*/
+				
+				
+				
+		/*var formpost = new Element('form',
+                {method: 'post', action: 'Post.jsp'});
+		//form.insert(new Element('input',{name: 'q', value: 'a', type: 'hidden'}));
+		console.log('1')
+		$(document.body).insert(formpost);
+		console.log('2')
+		formpost.submit();*/
+				
 
 	}
+	
+	/*function showResponse(xmlHttpRequest, responseHeader) {
+	    // Process HTTP response and update input form
+	    console.log('showResponse',responseHeader)
+	}*/
+</script>
+
 </script>
 <!-- Optional JavaScript bootstrap -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
