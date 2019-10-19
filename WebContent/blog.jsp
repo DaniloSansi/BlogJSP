@@ -145,7 +145,7 @@
 								<div class="input-group mb-2">
 									<button type="button" onClick="Post()" class="btn btn-info btn-lg btn-block">Create
 										New Post</button>
-									<button type="button" class="btn btn-info btn-lg btn-block">Create
+									<button type="button" onClick="Category()" class="btn btn-info btn-lg btn-block">Create
 										New Category</button>
 									<button type="button" class="btn btn-info btn-lg btn-block">Edit
 										Contact</button>
@@ -185,7 +185,10 @@
 	function Post() {
 		window.open("Post.jsp", "_self");
 	}
-
+	
+	function Category() {
+		window.open("Category.jsp", "_self");
+	}
 </script>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js">
