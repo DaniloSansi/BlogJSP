@@ -183,51 +183,13 @@
 	}
 	
 	function Post() {
-		//window.open("Post.jsp", "_self");
-		console.log('Posting ....')
-		
-		/*var xhr = new XMLHttpRequest();
-		xhr.open("POST", 'blog.jsp', true);
-		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.send(JSON.stringify({
-		    value: null
-		}));
-		
-		xhr.addEventListener('load', e => 
-		    console.log(e)
-				
-		);
-		  
-		xhr.addEventListener('error', function(event) {
-			    alert('Oops! Something went wrong executing post.');
-		});*/
-		/*var ajaxRequest = new Ajax.Request('blog.jsp', {
-		    method:       'post', 
-		    parameters:   {}, 
-		    asynchronous: true,
-		    onComplete:   showResponse
-		});*/
-				
-				
-				
-		/*var formpost = new Element('form',
-                {method: 'post', action: 'Post.jsp'});
-		//form.insert(new Element('input',{name: 'q', value: 'a', type: 'hidden'}));
-		console.log('1')
-		$(document.body).insert(formpost);
-		console.log('2')
-		formpost.submit();*/
-				
-
+		window.open("Post.jsp", "_self");
 	}
-	
-	/*function showResponse(xmlHttpRequest, responseHeader) {
-	    // Process HTTP response and update input form
-	    console.log('showResponse',responseHeader)
-	}*/
-</script>
 
 </script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js">
+	
 <!-- Optional JavaScript bootstrap -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
