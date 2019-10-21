@@ -12,6 +12,7 @@ public class PostDAO {
 	private String DBUsername = "root";
 	private String DBPassword = "B4nc0S1stem4";
 	private String INSERTEMPSQL = "INSERT INTO POST (cat_id,post_title,post_keywords,post_body,published )VALUES " + " (?, ?, ?, ?, ?);";
+	private String INSERTEMCATPSQL = "INSERT INTO CATEGORY (cat_title)VALUES " + " (?);";
 	private String SELECTEMPID = "select post_id, cat_id, post_title, post_keywords, post_body, published from POST post_id =?";
 	private String SELECTALLPOSTS = "select p.post_id, p.cat_id, p.post_title, p.post_keywords, p.post_body, p.published,c.cat_title"+
 	                                " from POST p INNER JOIN CATEGORY c ON p.cat_id = c.cat_id";
@@ -60,6 +61,26 @@ public class PostDAO {
 			finallySQLException(connection, preparedStatement, null);
 		}
 	}
+	
+	public void insertCategory(Category category) throws SQLException {
+		System.out.println(INSERTEMCATPSQL);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		// try-with-resource statement will auto close the connection.
+		try {
+			connection = getConnection();
+			preparedStatement = connection.prepareStatement(INSERTEMCATPSQL);
+			preparedStatement.setString(1, category.getCat_title());
+			
+			System.out.println(preparedStatement);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			printSQLException(e);
+		} finally {
+			finallySQLException(connection, preparedStatement, null);
+		}
+	}
+
 
 	public Post selectPost(int Eid) {
 		Post post = null;

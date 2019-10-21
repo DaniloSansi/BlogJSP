@@ -61,6 +61,9 @@ public class PostServerlet extends HttpServlet {
 			case "/insert":
 				insertPost(request, response);
 				break;
+			case "/insertcategory":
+				insertCategory(request, response);
+				break;				
 			case "/delete":
 				deletePost(request, response);
 				break;
@@ -69,9 +72,6 @@ public class PostServerlet extends HttpServlet {
 				break;
 			case "/update":
 				updatePost(request, response);
-				break;
-			case "/BlogPrj/Post":
-				createPost(request, response);
 				break;				
 			default:
 				listPost(request, response);
@@ -111,6 +111,14 @@ public class PostServerlet extends HttpServlet {
 		//Post e = new Post(ename, eage);
 		//empDAO.insertPost(e);
 		response.sendRedirect("list");
+	}
+	
+	private void insertCategory(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		String ecat_title = request.getParameter("cat_title");
+		Category e = new Category(-1,ecat_title);
+		empDAO.insertCategory(e);
+		response.sendRedirect("Category.jsp");
 	}
 
 	private void showEditPost(HttpServletRequest request, HttpServletResponse response)
