@@ -106,11 +106,16 @@ public class PostServerlet extends HttpServlet {
 
 	private void insertPost(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
-		String ename = request.getParameter("name");
-		int eage = Integer.parseInt(request.getParameter("age"));
-		//Post e = new Post(ename, eage);
-		//empDAO.insertPost(e);
-		response.sendRedirect("list");
+		
+		//int ecat = Integer.parseInt(request.getParameter("published"));
+		
+		String epost_title = request.getParameter("post_title");
+		String epost_keywords = request.getParameter("post_keywords");
+		int epublished = Integer.parseInt(request.getParameter("published"));
+		String epostbody = request.getParameter("postbody");
+		Post e = new Post(-1,1,epost_title,epost_keywords,epostbody,epublished,epost_title);
+		empDAO.insertPost(e);
+		response.sendRedirect("blog");
 	}
 	
 	private void insertCategory(HttpServletRequest request, HttpServletResponse response)

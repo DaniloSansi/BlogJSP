@@ -48,7 +48,7 @@
 						class="form-control">
 						<option selected>Choose...</option>
 						<c:forEach items="${result.rows}" var="res">
-							<option>${res.cat_title}</option>
+							<option value="" >${res.cat_title}</option>
 						</c:forEach>
 					</select>
 				</div>
@@ -72,8 +72,9 @@
 			</div>
 			<div class="form-group"> 
 				<label for="postbody">Post body</label>
-				<textarea class="form-control" id="postbody" rows="3"
-				></textarea>
+				<textarea class="form-control" id="idpostbody" name="postbody"  rows="3">
+			    	
+				</textarea>
 			</div>
 
 			<button onClick="goback()" class="btn btn-primary">Go Back</button>
