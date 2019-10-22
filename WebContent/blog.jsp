@@ -55,7 +55,7 @@
 			</ul>
 		</div>
 	</nav>
-	
+
 	<div class="jumbotron jumbotron-fluid mb-1"
 		style="background-image: url('https://wallpaperplay.com/walls/full/a/3/0/71487.jpg'); background-size: 100%;">
 
@@ -86,20 +86,36 @@
 						<br>
 						<h3>Recent Posts</h3>
 						<c:forEach var="post" items="${listPost}">
-							<div class="divTableRow">
+							<div class="divTableRow mt-5">
 								<div class="divTableCell">
 									<span class="font-weight-bold">Category Title :</span> <span
 										class="font-weight-bold text-info"><c:out
 											value="${post.getCat_title()}" /></span>
+
 								</div>
 								<div class="divTableCell">
-									<span class="font-weight-bold">Post Title : </span><c:out value="${post.getPost_title()}" />
+									<span class="font-weight-bold">Post Title : </span>
+									<c:out value="${post.getPost_title()}" />
+								</div>
+								<div class="divTableCell">
+									<span class="font-weight-bold"> Created at : </span>
+									<c:out value="${post.getCreated_at()}" />
 								</div>
 								<div class="divTableCell">
 									<c:out value="${post.getPost_body()}" />
 								</div>
 							</div>
-							<p/>
+							<c:choose>
+								<c:when test="${not empty username}">
+								    <form name="frmEditPost" action="edit" method="post">
+								        <input type="hidden" name="id" value="<c:out value='${post.getPost_id()}' />" />
+										<button type="submit" class="btn btn-outline-info btn-sm mt-2">
+											<span class="fas fa-edit"></span> Edit Post
+										</button>
+									</form>
+								</c:when>
+							</c:choose>
+							<p />
 						</c:forEach>
 					</div>
 					<div id="menu1" class="container tab-pane fade">
@@ -144,10 +160,11 @@
 
 							<div class="card-body ">
 								<div class="input-group mb-2">
-									<button type="button" onClick="Post()" class="btn btn-info btn-lg btn-block">Create
-										New Post</button>
-									<button type="button" onClick="Category()" class="btn btn-info btn-lg btn-block">Create
-										New Category</button>
+									<button type="button" onClick="Post()"
+										class="btn btn-info btn-lg btn-block">Create New Post</button>
+									<button type="button" onClick="Category()"
+										class="btn btn-info btn-lg btn-block">Create New
+										Category</button>
 									<button type="button" class="btn btn-info btn-lg btn-block">Edit
 										Contact</button>
 									<button type="button" class="btn btn-info btn-lg btn-block">Edit
@@ -160,8 +177,6 @@
 						</div>
 					</c:when>
 				</c:choose>
-
-
 
 			</div>
 		</div>
@@ -182,23 +197,22 @@
 	function LogOut() {
 		window.open("LogOut.jsp", "_self");
 	}
-	
+
 	function Post() {
 		window.open("Post.jsp", "_self");
 	}
-	
+
 	function Category() {
 		window.open("Category.jsp", "_self");
 	}
 </script>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js">
-	
 <!-- Optional JavaScript bootstrap -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-	crossorigin="anonymous"></script>
+	crossorigin="anonymous">
+</script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
 	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"

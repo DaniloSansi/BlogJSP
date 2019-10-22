@@ -20,7 +20,7 @@ public class Post {
 		
 	}
 	
-	public Post(int post_id, int cat_id,String post_title,String post_keywords,String post_body , int published , String cat_title) {
+	public Post(int post_id, int cat_id,String post_title,String post_keywords,String post_body , int published , String cat_title, Date created_at) {
 		this.post_id = post_id;
 		this.cat_id = cat_id;
 		this.post_title = post_title;
@@ -28,6 +28,18 @@ public class Post {
 		this.setPost_body(post_body);
 		this.published = published;
 		this.cat_title = cat_title;
+		this.created_at = created_at;
+		
+	}
+	
+	public Post(int post_id, int cat_id,String post_title,String post_keywords,String post_body , int published , Date created_at) {
+		this.post_id = post_id;
+		this.cat_id = cat_id;
+		this.post_title = post_title;
+		this.post_keywords = post_keywords;
+		this.setPost_body(post_body);
+		this.published = published;
+		this.created_at = created_at;
 		
 	}
 

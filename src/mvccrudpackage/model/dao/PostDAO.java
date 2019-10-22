@@ -1,6 +1,7 @@
 package mvccrudpackage.model.dao;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 import mvccrudpackage.model.bean.Category;
@@ -13,9 +14,10 @@ public class PostDAO {
 	private String DBPassword = "B4nc0S1stem4";
 	private String INSERTEMPSQL = "INSERT INTO POST (cat_id,post_title,post_keywords,post_body,published )VALUES " + " (?, ?, ?, ?, ?);";
 	private String INSERTEMCATPSQL = "INSERT INTO CATEGORY (cat_title)VALUES " + " (?);";
-	private String SELECTEMPID = "select post_id, cat_id, post_title, post_keywords, post_body, published from POST post_id =?";
-	private String SELECTALLPOSTS = "select p.post_id, p.cat_id, p.post_title, p.post_keywords, p.post_body, p.published,c.cat_title"+
-	                                " from POST p INNER JOIN CATEGORY c ON p.cat_id = c.cat_id";
+	private String SELECTEMPID = "select post_id, cat_id, post_title, post_keywords, post_body, published , created_at from POST where post_id =?";
+	private String SELECTCATID = "select cat_id,cat_title from category where cat_id =?";
+	private String SELECTALLPOSTS = "select p.post_id, p.cat_id, p.post_title, p.post_keywords, p.post_body, p.published,c.cat_title, p.created_at"+
+	                                " from POST p INNER JOIN CATEGORY c ON p.cat_id = c.cat_id order by p.post_id";
 	private String SELECTALLCATEGORIES = "select * from category";
 	private String DELETEEMPSQL = "delete from POST where post_id =?;";
 	private String UPDATEEMPSQL = "update POST set Ename = ?,Eage=? where Eid = ?;";
@@ -91,6 +93,7 @@ public class PostDAO {
 		try {
 			connection = getConnection();
 			// Step 2:Create a statement using connection object
+			
 			preparedStatement = connection.prepareStatement(SELECTEMPID);
 			preparedStatement.setInt(1, Eid);
 			System.out.println(preparedStatement);
@@ -104,9 +107,9 @@ public class PostDAO {
 				String Post_keywords = rs.getString("post_keywords");
 				String Post_body = rs.getString("post_body");
 				int Published = rs.getInt("published");
-				String Cat_title = rs.getString("cat_title");
+				Date Created_at = rs.getDate("created_at");
 				
-				post = new Post(Post_id, Cat_id, Post_title, Post_keywords, Post_body ,Published , Cat_title );
+				post = new Post(Post_id, Cat_id, Post_title, Post_keywords, Post_body ,Published , Created_at );
 			}
 		} catch (SQLException e) {
 			printSQLException(e);
@@ -116,6 +119,35 @@ public class PostDAO {
 		return post;
 	}
 
+	public Category selectCategory(int Eid) {
+		Category category = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		// Step 1: Establishing a Connection
+		try {
+			connection = getConnection();
+			// Step 2:Create a statement using connection object
+			preparedStatement = connection.prepareStatement(SELECTCATID);
+			preparedStatement.setInt(1, Eid);
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			rs = preparedStatement.executeQuery();
+			// Step 4: Process the ResultSet object.
+			while (rs.next()) {
+				int cat_id = rs.getInt("cat_id");
+				String cat_title = rs.getString("cat_title");
+				
+				category = new Category(cat_id, cat_title );
+			}
+		} catch (SQLException e) {
+			printSQLException(e);
+		} finally {
+			finallySQLException(connection, preparedStatement, rs);
+		}
+		return category;
+	}
+	
 	public List<Post> selectAllPosts() {
 	    //Post emp = null;
 		Connection connection = null;
@@ -140,8 +172,9 @@ public class PostDAO {
 				String Post_body = rs.getString("post_body");
 				int Published = rs.getInt("published");
 				String Cat_title = rs.getString("cat_title");
+				Date Created_at = rs.getDate("created_at");
 				
-				posts.add(new Post(Post_id, Cat_id, Post_title, Post_keywords, Post_body ,Published , Cat_title ));
+				posts.add(new Post(Post_id, Cat_id, Post_title, Post_keywords, Post_body ,Published , Cat_title, Created_at ));
 			}
 		} catch (SQLException e) {
 			printSQLException(e);

@@ -44,7 +44,7 @@
 			<p class="h1 mb-4">Create category</p>
 			<div class="form-row">
 				<div class="form-group col-md-5">
-					<label for="inputTitle">Category title</label> <input
+					<label for="inputTitle">Category title</label> <input autocomplete="off"
 						class="form-control" type="text" name="cat_title" size="45"
 						required value="<c:out value='${category.getCat_title()}' />" />
 					<button onClick="goback()" class="btn btn-primary mt-3">Go
@@ -58,7 +58,7 @@
 							All categories </a>
 
 						<c:forEach items="${result.rows}" var="res">
-							<a href="#" class="list-group-item list-group-item-action"><span class="fas fa-edit"></span> ${res.cat_title} </a>
+							 <a href="#" name="id" id="id" class="list-group-item list-group-item-action"> ${res.cat_title} </a>
 						</c:forEach>
 	
 					</div>
@@ -73,8 +73,7 @@
 </body>
 <script>
 	function goback() {
-		console.log('going back');
-		window.open("blog.jsp", "_self");
+		window.open("blog", "_self");
 	}
 </script>
 

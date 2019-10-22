@@ -40,9 +40,16 @@
 
 		<sql:query dataSource="${snapshot}" var="result"> select * from category </sql:query>
 
-		<div class="container">
-			<p class="h1 mb-4">Create post</p>
-			<div class="form-row">
+		<div class="container mt-3">
+			<c:if test="${post == null}">
+				<p class="h2 mb-4">Create post</p>
+			</c:if>
+			<c:if test="${post != null}">
+				<span class="h2 mb-4">Edit post <span
+					class="font-weight-bold text-info">${post.getPost_title()}</span>
+				</span>
+			</c:if>
+			<div class="form-row mt-4">
 				<div class="form-group col-md-3">
 					<label for="inputState">Category</label> <select id="idcategory"
 						name="category" onchange="checkSelect()" class="form-control">
@@ -89,8 +96,7 @@
 </body>
 <script>
 	function goback() {
-		console.log('going back');
-		window.open("blog.jsp", "_self");
+		window.open("blog", "_self");
 	}
 
 	function checkPublished() {

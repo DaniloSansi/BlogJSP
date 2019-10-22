@@ -70,6 +70,9 @@ public class PostServerlet extends HttpServlet {
 			case "/edit":
 				showEditPost(request, response);
 				break;
+			case "/editcategory":
+				showEditCategory(request, response);
+				break;
 			case "/update":
 				updatePost(request, response);
 				break;				
@@ -115,8 +118,8 @@ public class PostServerlet extends HttpServlet {
 		
 
 		System.out.println("epostbody"+epostbody);
-		
-		Post e = new Post(-1,ecat_id,epost_title,epost_keywords,epostbody,epublished,epost_title);
+
+		Post e = new Post(-1,ecat_id,epost_title,epost_keywords,epostbody,epublished,epost_title,null);
 		empDAO.insertPost(e);
 		response.sendRedirect("blog");
 	}
@@ -131,10 +134,21 @@ public class PostServerlet extends HttpServlet {
 
 	private void showEditPost(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
+		
 		int id = Integer.parseInt(request.getParameter("id"));
 		Post existingPost = empDAO.selectPost(id);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("postform.jsp");
+		System.out.println("showEditPost");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("Post.jsp");
 		request.setAttribute("post", existingPost);
+		dispatcher.forward(request, response);
+	}
+	
+	private void showEditCategory(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		Category existingCategory = empDAO.selectCategory(id);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("category.jsp");
+		request.setAttribute("category", existingCategory);
 		dispatcher.forward(request, response);
 	}
 
