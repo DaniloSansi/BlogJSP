@@ -93,12 +93,13 @@
 											value="${post.getCat_title()}" /></span>
 								</div>
 								<div class="divTableCell">
-									<c:out value="${post.getPost_title()}" />
+									<span class="font-weight-bold">Post Title : </span><c:out value="${post.getPost_title()}" />
 								</div>
 								<div class="divTableCell">
 									<c:out value="${post.getPost_body()}" />
 								</div>
 							</div>
+							<p/>
 						</c:forEach>
 					</div>
 					<div id="menu1" class="container tab-pane fade">

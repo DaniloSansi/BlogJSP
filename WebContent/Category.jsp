@@ -58,15 +58,11 @@
 							All categories </a>
 
 						<c:forEach items="${result.rows}" var="res">
-							<a href="#" class="list-group-item list-group-item-action">${res.cat_title}</a>
+							<a href="#" class="list-group-item list-group-item-action"><span class="fas fa-edit"></span> ${res.cat_title} </a>
 						</c:forEach>
 	
 					</div>
 				</div>
-
-
-
-
 			</div>
 
 

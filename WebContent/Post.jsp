@@ -25,7 +25,7 @@
 <title>Post management</title>
 </head>
 <body>
-	<form action="insert" method="post">
+	<form name="frmPost" action="insert" method="post">
 		<div class="jumbotron jumbotron-fluid mb-1"
 			style="background-image: url('https://wallpaperplay.com/walls/full/a/3/0/71487.jpg'); background-size: 100%;">
 
@@ -44,40 +44,43 @@
 			<p class="h1 mb-4">Create post</p>
 			<div class="form-row">
 				<div class="form-group col-md-3">
-					<label for="inputState">Category</label> <select id="inputState"
-						class="form-control">
-						<option selected>Choose...</option>
+					<label for="inputState">Category</label> <select id="idcategory"
+						name="category" onchange="checkSelect()" class="form-control">
 						<c:forEach items="${result.rows}" var="res">
-							<option value="" >${res.cat_title}</option>
+							<option value="${res.cat_id}"
+								${param.category == "${res.cat_id}" ? "selected" : ''}>${res.cat_title}</option>
 						</c:forEach>
 					</select>
 				</div>
 				<div class="form-group col-md-3">
 					<label for="inputTitle">Post title</label> <input id="inputTitle"
-						class="form-control" type="text" name="post_title" size="45" placeholder="Title"
-						required value="<c:out value='${post.getPost_title()}' />" />
-					
+						autocomplete="off" class="form-control" type="text"
+						name="post_title" size="45" placeholder="Title" required
+						value="<c:out value='${post.getPost_title()}' />" />
+
 				</div>
 				<div class="form-group col-md-3">
-					<label for="inputkeywords">Post key words</label> <input id="inputkeywords"
-						class="form-control" type="text" name="post_keywords" size="45" placeholder="key words"
+					<label for="inputkeywords">Post key words</label> <input
+						id="inputkeywords" autocomplete="off" class="form-control"
+						type="text" name="post_keywords" size="45" placeholder="key words"
 						required value="<c:out value='${post.getPost_keywords()}' />" />
-					
 				</div>
 				<div class="form-group col-md-3">
-					<label for="published">Published version</label> <input id="inputpublished"
-						class="form-control" type="text" name="published" size="45" placeholder="Published"
-						required value="<c:out value='${post.getPublished()}' />" />
-				</div> 
+					<label for="published">Published version</label> <input
+						id="inputpublished" autocomplete="off" oninput="checkPublished()"
+						class="form-control" type="text" name="published" size="45"
+						placeholder="Published" required
+						value="<c:out value='${post.getPublished()}' />" />
+				</div>
 			</div>
-			<div class="form-group"> 
+			<div class="form-group">
 				<label for="postbody">Post body</label>
-				<textarea class="form-control" id="idpostbody" name="postbody"  rows="3">
-			    	
+				<textarea class="form-control" id="idpostbody" name="postbody"
+					rows="3" value="<c:out value='${post.getPost_body()}' />">
 				</textarea>
 			</div>
 
-			<button onClick="goback()" class="btn btn-primary">Go Back</button>
+			<button class="btn btn-primary" onClick="goback()">Go Back</button>
 			<button type="submit" class="btn btn-primary">Save</button>
 		</div>
 
@@ -89,6 +92,30 @@
 		console.log('going back');
 		window.open("blog.jsp", "_self");
 	}
+
+	function checkPublished() {
+		var valid = true;
+		var vinputpublished = document.getElementById("inputpublished");
+
+		if (vinputpublished.value.length == 0) {
+			vinputpublished.style.borderColor = "red";
+			vinputpublished.style.borderWidth = "2px";
+			valid = false;
+		} else {
+
+			if (isNaN(vinputpublished.value)) {
+				vinputpublished.style.borderColor = "red";
+				vinputpublished.style.borderWidth = "2px";
+				valid = false;
+			} else {
+				vinputpublished.style.borderColor = "black";
+				vinputpublished.style.borderWidth = "1px";
+			}
+		}
+
+		return valid;
+	}
+	//<option selected>Choose...</option>
 </script>
 
 <script type="text/javascript"
