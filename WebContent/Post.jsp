@@ -25,7 +25,12 @@
 <title>Post management</title>
 </head>
 <body>
-	<form name="frmPost" action="insert" method="post">
+	<c:if test="${post == null}">
+			<form name="frmPost" action="insert" method="post">
+	</c:if>
+	<c:if test="${post != null}">
+			<form name="frmPost" action="update" method="post">
+	</c:if>
 		<div class="jumbotron jumbotron-fluid mb-1"
 			style="background-image: url('https://wallpaperplay.com/walls/full/a/3/0/71487.jpg'); background-size: 100%;">
 
@@ -34,6 +39,9 @@
 			</div>
 		</div>
 
+	    <input type="hidden" name="id"
+			value="<c:out value='${post.getPost_id()}' />" />
+												
 		<sql:setDataSource var="snapshot" driver="com.mysql.cj.jdbc.Driver"
 			url="jdbc:mysql://localhost:3306/blog" user="root"
 			password="B4nc0S1stem4" />
@@ -52,7 +60,7 @@
 			<div class="form-row mt-4">
 				<div class="form-group col-md-3">
 					<label for="inputState">Category</label> <select id="idcategory"
-						name="category" onchange="checkSelect()" class="form-control">
+						name="category" class="form-control">
 						<c:forEach items="${result.rows}" var="res">
 							<option value="${res.cat_id}"
 								${param.category == "${res.cat_id}" ? "selected" : ''}>${res.cat_title}</option>
@@ -83,7 +91,7 @@
 			<div class="form-group">
 				<label for="postbody">Post body</label>
 				<textarea class="form-control" id="idpostbody" name="postbody"
-					rows="3" value="<c:out value='${post.getPost_body()}' />">
+					rows="3"><c:out value='${post.getPost_body()}' />
 				</textarea>
 			</div>
 

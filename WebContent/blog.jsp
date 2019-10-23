@@ -73,7 +73,7 @@
 			<li class="nav-item"><a class="nav-link" data-toggle="pill"
 				href="#menu2">About</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="pill"
-				href="#menu2">Contact</a></li>
+				href="#menu3">Contact</a></li>
 		</ul>
 	</div>
 
@@ -103,18 +103,32 @@
 								</div>
 								<div class="divTableCell">
 									<c:out value="${post.getPost_body()}" />
+					
 								</div>
 							</div>
-							<c:choose>
-								<c:when test="${not empty username}">
-								    <form name="frmEditPost" action="edit" method="post">
-								        <input type="hidden" name="id" value="<c:out value='${post.getPost_id()}' />" />
-										<button type="submit" class="btn btn-outline-info btn-sm mt-2">
-											<span class="fas fa-edit"></span> Edit Post
-										</button>
-									</form>
-								</c:when>
-							</c:choose>
+							<div class="row">
+								<c:choose>
+									<c:when test="${not empty username}">
+										<form name="frmEditPost" action="edit" method="post">
+											<input type="hidden" name="id"
+												value="<c:out value='${post.getPost_id()}' />" />
+											<button type="submit"
+												class="btn btn-outline-info btn-sm mt-2 ml-3">
+												<span class="fas fa-edit"></span> Edit Post
+											</button>
+
+										</form>
+										<form name="frmDeletePost" action="delete" method="post">
+											<input type="hidden" name="id"
+												value="<c:out value='${post.getPost_id()}' />" />
+											<button type="submit"
+												class="btn btn-outline-danger btn-sm mt-2 ml-2">
+												<span class="fas fa-ban"></span> Delete Post
+											</button>
+										</form>
+									</c:when>
+								</c:choose>
+							</div>
 							<p />
 						</c:forEach>
 					</div>
@@ -129,6 +143,24 @@
 						<h3>About</h3>
 						<p>Sed ut perspiciatis unde omnis iste natus error sit
 							voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+
+					</div>
+					<div id="menu3" class="container tab-pane fade">
+						<br>
+						<h3>Contact Us</h3>
+						<p>
+							<b>Postal Address:</b>144 High St, Prahran VIC 3181
+						</p>
+						<p>
+							<b>Email :</b>blogaddress@gmail.com
+						</p>
+						<p>
+							<b>Telephone:</b>03466564545
+						</p>
+						<iframe
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d18080.264128955976!2d144.99415863009477!3d-37.85218117112083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad66823873270b5%3A0x5045675218ce8e0!2sPrahran%20VIC%203181!5e0!3m2!1sen!2sau!4v1571807662891!5m2!1sen!2sau"
+							width="600" height="450" frameborder="0" style="border: 0;"
+							allowfullscreen=""></iframe>
 
 					</div>
 				</div>
@@ -149,7 +181,7 @@
 
 						</div>
 						<p class="card-text">This is a blog for discussing web
-							debelopment</p>
+							development</p>
 
 					</div>
 				</div>
@@ -171,7 +203,8 @@
 										About</button>
 									<button type="button" class="btn btn-info btn-lg btn-block">Old
 										Post List</button>
-									<button type="button" class="btn btn-info btn-lg btn-block">LogOut</button>
+									<button type="button" onClick="LogOut()"
+										class="btn btn-info btn-lg btn-block">LogOut</button>
 								</div>
 							</div>
 						</div>
@@ -189,6 +222,7 @@
   </div> -->
 
 </body>
+
 <script>
 	function LoginPage() {
 		window.open("Login.jsp", "_self");

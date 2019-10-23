@@ -116,9 +116,6 @@ public class PostServerlet extends HttpServlet {
 		int epublished = Integer.parseInt(request.getParameter("published"));
 		String epostbody = request.getParameter("postbody");
 		
-
-		System.out.println("epostbody"+epostbody);
-
 		Post e = new Post(-1,ecat_id,epost_title,epost_keywords,epostbody,epublished,epost_title,null);
 		empDAO.insertPost(e);
 		response.sendRedirect("blog");
@@ -154,20 +151,23 @@ public class PostServerlet extends HttpServlet {
 
 	private void updatePost(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		String ename = request.getParameter("name");
-		int eage = Integer.parseInt(request.getParameter("age"));
-
-		//Post e = new Post(id, ename, eage);
-		//empDAO.updatePost(e);
-		response.sendRedirect("list");
+		int eid = Integer.parseInt(request.getParameter("id"));
+		int ecat_id = Integer.parseInt(request.getParameter("category"));
+		String epost_title = request.getParameter("post_title");
+		String epost_keywords = request.getParameter("post_keywords");
+		int epublished = Integer.parseInt(request.getParameter("published"));
+		String epostbody = request.getParameter("postbody");
+		
+		Post e = new Post(eid,ecat_id,epost_title,epost_keywords,epostbody,epublished,epost_title,null);
+		empDAO.updatePost(e);
+		response.sendRedirect("blog");
 	}
 
 	private void deletePost(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		empDAO.deletePost(id);
-		response.sendRedirect("list");
+		response.sendRedirect("blog");
 	}
 
 }
