@@ -79,7 +79,10 @@ public class PostServerlet extends HttpServlet {
 				break;
 			case "/update":
 				updatePost(request, response);
-				break;				
+				break;	
+			case "/search":
+				search(request, response);
+				break;					
 			default:
 				listPost(request, response);
 				break;
@@ -96,13 +99,27 @@ public class PostServerlet extends HttpServlet {
 		List<String> comments = new ArrayList<String>();
 		
 		for(Post post : listPost){		
-			
 			comments = getCommentsByPostId(post.getPost_id());
-			
-			System.out.println("Comments loaded for post "+post.getCat_title()+"  total comment: " +comments.size());
-				
 			post.setComments(empDAO.selectComments(post.getPost_id()));
-			
+		}
+		
+		request.setAttribute("listPost", listPost);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("blog.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void search(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		String esearch = request.getParameter("search");
+		
+		List<Post> listPost = empDAO.selectAllPostsSearch(esearch);
+		
+		List<String> comments = new ArrayList<String>();
+		
+		for(Post post : listPost){		
+			comments = getCommentsByPostId(post.getPost_id());	
+			post.setComments(empDAO.selectComments(post.getPost_id()));
 		}
 				
 		System.out.println(listPost);

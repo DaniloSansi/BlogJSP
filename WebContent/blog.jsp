@@ -108,7 +108,8 @@
 							</div>
 
 							<div class=" ml-1">
-								<button class="btn btn-outline-secondary" data-toggle="collapse" data-target="#demo${post.getPost_id()}">
+								<button class="btn btn-outline-secondary" data-toggle="collapse"
+									data-target="#demo${post.getPost_id()}">
 									<span class="font-weight-bold">Comments
 										(${post.getComments().size()})</span>
 								</button>
@@ -203,22 +204,24 @@
 
 			<div class="col-md-3">
 				<div class="card bg-light mt-3" style="max-width: 18rem;">
+					<form name="frmSearch" action="search" method="post">
+						<div class="card-body ">
+							<div class="input-group mb-2">
+								<input type="text" class="form-control"
+									id="inlineFormInputGroup" name="search" placeholder="Search">
+								<div class="input-group-prepend">
+									<button type="submit" class="btn btn-info">
+										<i class="fas fa-search"></i>
+									</button>
+								</div>
 
-					<div class="card-body ">
-						<div class="input-group mb-2">
-							<input type="text" class="form-control" id="inlineFormInputGroup"
-								placeholder="Search">
-							<div class="input-group-prepend">
-								<button type="button" class="btn btn-info">
-									<i class="fas fa-search"></i>
-								</button>
 							</div>
+							<p class="card-text">This is a blog for discussing web
+								development</p>
 
 						</div>
-						<p class="card-text">This is a blog for discussing web
-							development</p>
+					</form>
 
-					</div>
 				</div>
 
 				<c:choose>
