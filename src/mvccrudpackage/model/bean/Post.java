@@ -1,6 +1,8 @@
 package mvccrudpackage.model.bean;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Post {
 	
@@ -12,8 +14,8 @@ public class Post {
 	private int published;
 	private Date created_at;
 	private Date updated_at;
-	
-	private String cat_title;
+	private String cat_title;	
+	private List<Comments> comments;
 	
 	
 	public Post() {
@@ -114,5 +116,14 @@ public class Post {
 	public void setCat_title(String cat_title) {
 		this.cat_title = cat_title;
 	}
+
+	public List<Comments> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comments> comments) {
+		this.comments = comments;
+	}
+	
 	
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mvccrudpackage.model.bean.Category;
+import mvccrudpackage.model.bean.Comments;
 import mvccrudpackage.model.bean.Post;
 import mvccrudpackage.model.dao.PostDAO;
 import java.sql.SQLException;
@@ -63,7 +64,10 @@ public class PostServerlet extends HttpServlet {
 				break;
 			case "/insertcategory":
 				insertCategory(request, response);
-				break;				
+				break;			
+			case "/insertcomment":
+				insertcomment(request, response);
+				break;						
 			case "/delete":
 				deletePost(request, response);
 				break;
@@ -88,9 +92,34 @@ public class PostServerlet extends HttpServlet {
 	private void listPost(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		List<Post> listPost = empDAO.selectAllPosts();
+		
+		List<String> comments = new ArrayList<String>();
+		
+		for(Post post : listPost){		
+			
+			comments = getCommentsByPostId(post.getPost_id());
+			
+			System.out.println("Comments loaded for post "+post.getCat_title()+"  total comment: " +comments.size());
+				
+			post.setComments(empDAO.selectComments(post.getPost_id()));
+			
+		}
+				
+		System.out.println(listPost);
 		request.setAttribute("listPost", listPost);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("blog.jsp");
 		dispatcher.forward(request, response);
+	}
+	
+	private List<String> getCommentsByPostId(int post_id) {
+
+		List<Comments> listComments = empDAO.selectComments(post_id);	
+		List<String> commentsString = new ArrayList<String>();
+		 
+		for(Comments comment : listComments){		
+			commentsString.add(comment.getComments_text());
+		}
+		return commentsString;
 	}
 
 	private void createPost(HttpServletRequest request, HttpServletResponse response)
@@ -127,6 +156,16 @@ public class PostServerlet extends HttpServlet {
 		Category e = new Category(-1,ecat_title);
 		empDAO.insertCategory(e);
 		response.sendRedirect("Category.jsp");
+	}
+	
+	private void insertcomment(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+	
+		int epost_id = Integer.parseInt(request.getParameter("post_id"));
+		String ecomments_text = request.getParameter("comment");
+		Comments e = new Comments(epost_id,ecomments_text);
+		empDAO.insertComment(e);
+		response.sendRedirect("blog");
 	}
 
 	private void showEditPost(HttpServletRequest request, HttpServletResponse response)

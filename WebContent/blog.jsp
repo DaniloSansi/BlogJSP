@@ -103,9 +103,37 @@
 								</div>
 								<div class="divTableCell">
 									<c:out value="${post.getPost_body()}" />
-					
+
 								</div>
 							</div>
+
+							<div class=" ml-1">
+								<span class="font-weight-bold">Comments
+									(${post.getComments().size()})</span>
+								<c:forEach var="comments" items="${post.getComments()}">
+									<div class="divTableRow">
+										<span class="font-weight-bold">${comments.getCreated_at()}
+											: </span> <span class="font-weight-regular"><c:out
+												value="${comments.getComments_text()}" /></span>
+									</div>
+								</c:forEach>
+
+								<form name="frmAddComment" action="insertcomment" method="post">
+									<div class="input-group">
+										<input type="hidden" name="post_id"
+											value="<c:out value='${post.getPost_id()}' />" /> <input
+											type="text" class="form-control" id="comment" name="comment"
+											placeholder="Add a comment">
+										<div class="input-group-prepend">
+
+											<button type="submit" class="btn btn-outline-secondary">
+												<i class="fas fa-plus-circle"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+
 							<div class="row">
 								<c:choose>
 									<c:when test="${not empty username}">
@@ -129,6 +157,7 @@
 									</c:when>
 								</c:choose>
 							</div>
+
 							<p />
 						</c:forEach>
 					</div>

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.*;
 
 import mvccrudpackage.model.bean.Category;
+import mvccrudpackage.model.bean.Comments;
 import mvccrudpackage.model.bean.Post;
 
 public class PostDAO {
@@ -12,10 +13,12 @@ public class PostDAO {
 	private String DBURL = "jdbc:mysql://localhost:3306/BLOG";
 	private String DBUsername = "root";
 	private String DBPassword = "B4nc0S1stem4";
-	private String INSERTEMPSQL = "INSERT INTO POST (cat_id,post_title,post_keywords,post_body,published )VALUES " + " (?, ?, ?, ?, ?);";
-	private String INSERTEMCATPSQL = "INSERT INTO CATEGORY (cat_title)VALUES " + " (?);";
+	private String INSERTEMPSQL = "INSERT INTO POST (cat_id,post_title,post_keywords,post_body,published )VALUES (?, ?, ?, ?, ?);";
+	private String INSERTEMCATPSQL = "INSERT INTO CATEGORY (cat_title)VALUES (?);";
+	private String INSERTEMCOMPSQL = "INSERT INTO COMMENTS (post_id,comments_text)VALUES (?,?);";
 	private String SELECTEMPID = "select post_id, cat_id, post_title, post_keywords, post_body, published , created_at from POST where post_id =?";
 	private String SELECTCATID = "select cat_id,cat_title from category where cat_id =?";
+	private String SELECTCOMMENTID = "select comments_id, post_id, comments_text,created_at from comments where post_id  =? order by comments_id";
 	private String SELECTALLPOSTS = "select p.post_id, p.cat_id, p.post_title, p.post_keywords, p.post_body, p.published,c.cat_title, p.created_at"+
 	                                " from POST p INNER JOIN CATEGORY c ON p.cat_id = c.cat_id order by p.post_id";
 	private String SELECTALLCATEGORIES = "select * from category";
@@ -82,6 +85,26 @@ public class PostDAO {
 			finallySQLException(connection, preparedStatement, null);
 		}
 	}
+	
+	public void insertComment(Comments comments) throws SQLException {
+		System.out.println(INSERTEMCOMPSQL);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		// try-with-resource statement will auto close the connection.
+		try {
+			connection = getConnection();
+			preparedStatement = connection.prepareStatement(INSERTEMCOMPSQL);
+			preparedStatement.setInt(1, comments.getPost_id());
+			preparedStatement.setString(2, comments.getComments_text());
+			
+			System.out.println(preparedStatement);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			printSQLException(e);
+		} finally {
+			finallySQLException(connection, preparedStatement, null);
+		}
+	}
 
 
 	public Post selectPost(int Eid) {
@@ -118,6 +141,35 @@ public class PostDAO {
 		}
 		return post;
 	}
+	
+	public List<Comments> selectComments(int post_id) {
+		List<Comments> comments = new ArrayList<Comments>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = getConnection();
+			preparedStatement = connection.prepareStatement(SELECTCOMMENTID);
+			preparedStatement.setInt(1, post_id);
+			//System.out.println(preparedStatement);
+			rs = preparedStatement.executeQuery();
+			
+			while (rs.next()) {
+				String Comments_text = rs.getString("comments_text");
+				int Post_id = rs.getInt("post_id");
+				Date datecreated = rs.getDate("created_at");
+				Comments comment = new Comments(Post_id,Comments_text,datecreated);
+				comments.add(comment);
+			}
+			
+		} catch (SQLException e) {
+			printSQLException(e);
+		} finally {
+			finallySQLException(connection, preparedStatement, rs);
+		}
+		return comments;
+	}
 
 	public Category selectCategory(int Eid) {
 		Category category = null;
@@ -130,7 +182,7 @@ public class PostDAO {
 			// Step 2:Create a statement using connection object
 			preparedStatement = connection.prepareStatement(SELECTCATID);
 			preparedStatement.setInt(1, Eid);
-			System.out.println(preparedStatement);
+			//System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
 			rs = preparedStatement.executeQuery();
 			// Step 4: Process the ResultSet object.
@@ -160,7 +212,7 @@ public class PostDAO {
 			connection = getConnection();
 			// Step 2:Create a statement using connection object
 			preparedStatement = connection.prepareStatement(SELECTALLPOSTS);
-			System.out.println(preparedStatement);
+			//System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
 			rs = preparedStatement.executeQuery();
 			// Step 4: Process the ResultSet object.
@@ -195,7 +247,7 @@ public class PostDAO {
 		try {
 			connection = getConnection();
 			preparedStatement = connection.prepareStatement(SELECTALLCATEGORIES);
-			System.out.println(preparedStatement);
+			//System.out.println(preparedStatement);
 			rs = preparedStatement.executeQuery();
 			
 			while (rs.next()) {
