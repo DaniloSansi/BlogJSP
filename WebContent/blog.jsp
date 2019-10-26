@@ -86,7 +86,7 @@
 						<br>
 						<h3>Recent Posts</h3>
 						<c:forEach var="post" items="${listPost}">
-							<div class="divTableRow mt-5">
+							<div class="divTableRow mt-5 mb-2">
 								<div class="divTableCell">
 									<span class="font-weight-bold">Category Title :</span> <span
 										class="font-weight-bold text-info"><c:out
@@ -108,18 +108,24 @@
 							</div>
 
 							<div class=" ml-1">
-								<span class="font-weight-bold">Comments
-									(${post.getComments().size()})</span>
-								<c:forEach var="comments" items="${post.getComments()}">
-									<div class="divTableRow">
-										<span class="font-weight-bold">${comments.getCreated_at()}
-											: </span> <span class="font-weight-regular"><c:out
-												value="${comments.getComments_text()}" /></span>
-									</div>
-								</c:forEach>
+								<button class="btn btn-outline-secondary" data-toggle="collapse" data-target="#demo${post.getPost_id()}">
+									<span class="font-weight-bold">Comments
+										(${post.getComments().size()})</span>
+								</button>
+
+								<div id="demo${post.getPost_id()}" class="collapse mt-2">
+									<c:forEach var="comments" items="${post.getComments()}">
+										<div class="divTableRow">
+											<span class="font-weight-bold">${comments.getCreated_at()}
+												: </span> <span class="font-weight-regular"><c:out
+													value="${comments.getComments_text()}" /></span>
+										</div>
+									</c:forEach>
+								</div>
+
 
 								<form name="frmAddComment" action="insertcomment" method="post">
-									<div class="input-group">
+									<div class="input-group mt-2">
 										<input type="hidden" name="post_id"
 											value="<c:out value='${post.getPost_id()}' />" /> <input
 											type="text" class="form-control" id="comment" name="comment"

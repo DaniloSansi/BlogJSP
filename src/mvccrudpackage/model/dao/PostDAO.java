@@ -23,6 +23,7 @@ public class PostDAO {
 	                                " from POST p INNER JOIN CATEGORY c ON p.cat_id = c.cat_id order by p.post_id";
 	private String SELECTALLCATEGORIES = "select * from category";
 	private String DELETEEMPSQL = "delete from POST where post_id =?;";
+	private String DELETECMSQL = "delete from COMMENTS where post_id =?;";
 	private String UPDATEEMPSQL = "update POST set cat_id = ?, post_title = ?, post_keywords = ?, post_body = ?, published = ? where post_id = ?";
 
 	// constructor
@@ -269,6 +270,11 @@ public class PostDAO {
 		PreparedStatement preparedStatement = null;
 		try {
 			connection = getConnection();
+			
+			preparedStatement = connection.prepareStatement(DELETECMSQL);
+			preparedStatement.setInt(1, id);
+			preparedStatement.executeUpdate();
+			
 			preparedStatement = connection.prepareStatement(DELETEEMPSQL);
 			preparedStatement.setInt(1, id);
 			postDeleted = preparedStatement.executeUpdate() > 0 ? true : false;
