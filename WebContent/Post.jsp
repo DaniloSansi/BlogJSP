@@ -49,14 +49,9 @@
 		<sql:query dataSource="${snapshot}" var="result"> select * from category </sql:query>
 
 		<div class="container mt-3">
-			<c:if test="${post == null}">
-				<p class="h2 mb-4">Create post</p>
-			</c:if>
-			<c:if test="${post != null}">
-				<span class="h2 mb-4">Edit post <span
-					class="font-weight-bold text-info">${post.getPost_title()}</span>
-				</span>
-			</c:if>
+			<span class="h2 mb-4">Edit post <span
+				class="font-weight-bold text-info">${post.getPost_title()}</span>
+			</span>
 			<div class="form-row mt-4">
 				<div class="form-group col-md-3">
 					<label for="inputState">Category</label> <select id="idcategory"

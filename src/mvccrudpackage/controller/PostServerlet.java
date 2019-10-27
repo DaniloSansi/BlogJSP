@@ -54,6 +54,15 @@ public class PostServerlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getServletPath();
+		
+		String post_id = null;
+		
+		if(action.indexOf("viewpost/") >= 0) {
+			action = action.substring(1, action.length());	;
+			post_id = action.substring(action.indexOf("/")+1, action.length());	
+			action = "/viewpost";
+		}
+		
 		try {
 			switch (action) {
 			case "/new":
@@ -67,13 +76,20 @@ public class PostServerlet extends HttpServlet {
 				break;			
 			case "/insertcomment":
 				insertcomment(request, response);
-				break;						
+				break;				
+			case "/insertcommentfrompost":
+				insertcommentFromPost(request, response);
+				break;							
 			case "/delete":
 				deletePost(request, response);
 				break;
 			case "/edit":
 				showEditPost(request, response);
 				break;
+			case "/viewpost":
+				System.out.println("aaaaaaa");
+				showViewPost(request, response, post_id);
+				break;								
 			case "/editcategory":
 				showEditCategory(request, response);
 				break;
@@ -184,6 +200,24 @@ public class PostServerlet extends HttpServlet {
 		empDAO.insertComment(e);
 		response.sendRedirect("blog");
 	}
+	
+	private void insertcommentFromPost(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+	
+		int epost_id = Integer.parseInt(request.getParameter("post_id"));
+		String ecomments_text = request.getParameter("comment");
+		Comments e = new Comments(epost_id,ecomments_text);
+		empDAO.insertComment(e);
+		
+		Post existingPost = empDAO.selectPost(epost_id);
+		existingPost.setComments(empDAO.selectComments(epost_id));
+		
+		request.setAttribute("id", epost_id);
+		
+		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/viewpost"); 
+		request.setAttribute("post", existingPost);
+		dispatcher.forward(request, response);
+	}
 
 	private void showEditPost(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
@@ -192,6 +226,29 @@ public class PostServerlet extends HttpServlet {
 		Post existingPost = empDAO.selectPost(id);
 		System.out.println("showEditPost");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("Post.jsp");
+		request.setAttribute("post", existingPost);
+		dispatcher.forward(request, response);
+	}
+	
+	private void showViewPost(HttpServletRequest request, HttpServletResponse response, String post_id)
+			throws SQLException, ServletException, IOException {
+		
+		int id=0;
+		
+		if(post_id != null) {
+			id = Integer.parseInt(post_id);
+		}
+		else if(request.getParameter("id") != null) {
+			id= Integer.parseInt(request.getParameter("id"));
+		}
+		else if(request.getAttribute("id") != null ){
+			id= Integer.parseInt(request.getAttribute("id").toString());
+		}
+
+		Post existingPost = empDAO.selectPost(id);
+		existingPost.setComments(empDAO.selectComments(id));
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewPost.jsp");
 		request.setAttribute("post", existingPost);
 		dispatcher.forward(request, response);
 	}

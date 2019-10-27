@@ -102,8 +102,17 @@
 									<c:out value="${post.getCreated_at()}" />
 								</div>
 								<div class="divTableCell">
-									<c:out value="${post.getPost_body()}" />
-
+									
+									<form name="frmViewPost" action="viewpost" method="post">
+										<input type="hidden" name="id"
+											value="<c:out value='${post.getPost_id()}' />" />
+											<c:out value="${post.getPost_body()}" escapeXml="false" />
+										<button type="submit" name="readmore"
+											class="btn btn-outline-info btn-sm mt-2 ml-3">
+											Read post ...
+										</button>
+										
+									</form>
 								</div>
 							</div>
 
@@ -170,7 +179,7 @@
 					</div>
 					<div id="menu1" class="container tab-pane fade">
 						<br>
-						<h3>Posts</h3>
+						<h3>Old Posts</h3>
 						<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco
 							laboris nisi ut aliquip ex ea commodo consequat.</p>
 					</div>
@@ -191,7 +200,7 @@
 							s1484814@student.mp.edu.au / s1465063@student.mp.edu.au /
 							t.weerathunga93@yahoo.com.</p>
 
-						<span class="font-weight-bold"><p>Thank you!</p></span> 
+						<span class="font-weight-bold"><p>Thank you!</p></span>
 
 					</div>
 					<div id="menu3" class="container tab-pane fade">
