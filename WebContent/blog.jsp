@@ -177,8 +177,21 @@
 					<div id="menu2" class="container tab-pane fade">
 						<br>
 						<h3>About</h3>
-						<p>Sed ut perspiciatis unde omnis iste natus error sit
-							voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+						<p>This is a blog created by students of BIT235 second
+							semester of 2019. The purpose of this blog is to apply the
+							knowledge acquired in class. It was used Java to handle the
+							back-end, bootstrap 4 and HTML/CSS/Javascript to handle the
+							front-end. Mysql is the database used to store all information
+							displayed on this page.</p>
+						<p>Here we show the competence and ability to build a web
+							application. From now on, we're able to take clients'
+							requirements and build a software architecture and delivery a
+							fully functional online solution.</p>
+						<p>If any interest or website proposal, please contact us on
+							s1484814@student.mp.edu.au / s1465063@student.mp.edu.au /
+							t.weerathunga93@yahoo.com.</p>
+
+						<span class="font-weight-bold"><p>Thank you!</p></span> 
 
 					</div>
 					<div id="menu3" class="container tab-pane fade">
@@ -188,7 +201,8 @@
 							<b>Postal Address:</b>144 High St, Prahran VIC 3181
 						</p>
 						<p>
-							<b>Email :</b>blogaddress@gmail.com
+							<b>Email :</b>s1484814@student.mp.edu.au /
+							s1465063@student.mp.edu.au
 						</p>
 						<p>
 							<b>Telephone:</b>03466564545
