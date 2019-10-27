@@ -21,6 +21,8 @@ public class PostDAO {
 	private String SELECTCOMMENTID = "select comments_id, post_id, comments_text,created_at from comments where post_id  =? order by comments_id";
 	private String SELECTALLPOSTS = "select p.post_id, p.cat_id, p.post_title, p.post_keywords, p.post_body, p.published,c.cat_title, p.created_at"+
 	                                " from POST p INNER JOIN CATEGORY c ON p.cat_id = c.cat_id order by p.post_id";
+	private String SELECTALLPOSTSOLD = "select p.post_id, p.cat_id, p.post_title, p.post_keywords, p.post_body, p.published,c.cat_title, p.created_at"+
+									" from POST p INNER JOIN CATEGORY c ON p.cat_id = c.cat_id order by p.post_id desc";	
 	private String SELECTALLPOSTSSEARCH = "select p.post_id, p.cat_id, p.post_title, p.post_keywords, p.post_body, p.published,c.cat_title, p.created_at"+
             						   " from POST p INNER JOIN CATEGORY c ON p.cat_id = c.cat_id where (p.post_body  LIKE ? or p.post_title LIKE ? or p.post_keywords LIKE ?)  order by p.post_id";	
 	private String SELECTALLCATEGORIES = "select * from category";
@@ -272,6 +274,40 @@ public class PostDAO {
 		return posts;
 	}
 
+	public List<Post> selectAllPostsOld() {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		List<Post> posts = new ArrayList<>();
+		
+		try {
+			connection = getConnection();
+			preparedStatement = connection.prepareStatement(SELECTALLPOSTSOLD);
+			rs = preparedStatement.executeQuery();
+
+			System.out.println(preparedStatement);
+			
+			while (rs.next()) {
+				int Post_id = rs.getInt("post_id");
+				int Cat_id = rs.getInt("cat_id");
+				String Post_title = rs.getString("post_title");
+				String Post_keywords = rs.getString("post_keywords");
+				String Post_body = rs.getString("post_body");
+				int Published = rs.getInt("published");
+				String Cat_title = rs.getString("cat_title");
+				Date Created_at = rs.getDate("created_at");
+				
+				posts.add(new Post(Post_id, Cat_id, Post_title, Post_keywords, Post_body ,Published , Cat_title, Created_at ));
+			}
+		} catch (SQLException e) {
+			printSQLException(e);
+		} finally {
+			finallySQLException(connection, preparedStatement, rs);
+		}
+		return posts;
+	}
+	
 	public List<Category> selectAllCategories() {
 
 		Connection connection = null;

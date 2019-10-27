@@ -4,6 +4,7 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +26,17 @@
 <title>Blog</title>
 </head>
 <style>
+.linkButton {
+	background: none;
+	border: none;
+	color: #0066ff;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.jumbotron {
+    padding: 2rem 2rem;
+}
 </style>
 
 <body>
@@ -102,16 +114,26 @@
 									<c:out value="${post.getCreated_at()}" />
 								</div>
 								<div class="divTableCell">
-									
+
 									<form name="frmViewPost" action="viewpost" method="post">
+										<c:set var="stringbody" scope="session"
+											value="${post.getPost_body()}" />
+
 										<input type="hidden" name="id"
 											value="<c:out value='${post.getPost_id()}' />" />
+
+										<c:if test="${fn:length(stringbody) > 200}">
+											<c:out value="${fn:substring(post.getPost_body(),0, 250)}"
+												escapeXml="false" />
+										</c:if>
+										<c:if test="${fn:length(stringbody) <= 200 }">
 											<c:out value="${post.getPost_body()}" escapeXml="false" />
+										</c:if>
+
 										<button type="submit" name="readmore"
-											class="btn btn-outline-info btn-sm mt-2 ml-3">
-											Read post ...
-										</button>
-										
+											class="linkButton btn btn-outline-info"> Read
+											more >></button>
+
 									</form>
 								</div>
 							</div>
@@ -180,8 +202,107 @@
 					<div id="menu1" class="container tab-pane fade">
 						<br>
 						<h3>Old Posts</h3>
-						<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco
-							laboris nisi ut aliquip ex ea commodo consequat.</p>
+						<c:forEach var="post" items="${listPostOld}">
+							<div class="divTableRow mt-5 mb-2">
+								<div class="divTableCell">
+									<span class="font-weight-bold">Category Title :</span> <span
+										class="font-weight-bold text-info"><c:out
+											value="${post.getCat_title()}" /></span>
+
+								</div>
+								<div class="divTableCell">
+									<span class="font-weight-bold">Post Title : </span>
+									<c:out value="${post.getPost_title()}" />
+								</div>
+								<div class="divTableCell">
+									<span class="font-weight-bold"> Created at : </span>
+									<c:out value="${post.getCreated_at()}" />
+								</div>
+								<div class="divTableCell">
+
+									<form name="frmViewPost" action="viewpost" method="post">
+										<c:set var="stringbody" scope="session"
+											value="${post.getPost_body()}" />
+
+										<input type="hidden" name="id"
+											value="<c:out value='${post.getPost_id()}' />" />
+
+										<c:if test="${fn:length(stringbody) > 200}">
+											<c:out value="${fn:substring(post.getPost_body(),0, 250)}"
+												escapeXml="false" />
+										</c:if>
+										<c:if test="${fn:length(stringbody) <= 200 }">
+											<c:out value="${post.getPost_body()}" escapeXml="false" />
+										</c:if>
+
+										<button type="submit" name="readmore"
+											class="linkButton btn btn-outline-info"> Read
+											more >></button>
+
+									</form>
+								</div>
+							</div>
+
+							<div class=" ml-1">
+								<button class="btn btn-outline-secondary" data-toggle="collapse"
+									data-target="#demo${post.getPost_id()}">
+									<span class="font-weight-bold">Comments
+										(${post.getComments().size()})</span>
+								</button>
+
+								<div id="demo${post.getPost_id()}" class="collapse mt-2">
+									<c:forEach var="comments" items="${post.getComments()}">
+										<div class="divTableRow">
+											<span class="font-weight-bold">${comments.getCreated_at()}
+												: </span> <span class="font-weight-regular"><c:out
+													value="${comments.getComments_text()}" /></span>
+										</div>
+									</c:forEach>
+								</div>
+
+
+								<form name="frmAddComment" action="insertcomment" method="post">
+									<div class="input-group mt-2">
+										<input type="hidden" name="post_id"
+											value="<c:out value='${post.getPost_id()}' />" /> <input
+											type="text" class="form-control" id="comment" name="comment"
+											placeholder="Add a comment">
+										<div class="input-group-prepend">
+
+											<button type="submit" class="btn btn-outline-secondary">
+												<i class="fas fa-plus-circle"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div class="row">
+								<c:choose>
+									<c:when test="${not empty username}">
+										<form name="frmEditPost" action="edit" method="post">
+											<input type="hidden" name="id"
+												value="<c:out value='${post.getPost_id()}' />" />
+											<button type="submit"
+												class="btn btn-outline-info btn-sm mt-2 ml-3">
+												<span class="fas fa-edit"></span> Edit Post
+											</button>
+
+										</form>
+										<form name="frmDeletePost" action="delete" method="post">
+											<input type="hidden" name="id"
+												value="<c:out value='${post.getPost_id()}' />" />
+											<button type="submit"
+												class="btn btn-outline-danger btn-sm mt-2 ml-2">
+												<span class="fas fa-ban"></span> Delete Post
+											</button>
+										</form>
+									</c:when>
+								</c:choose>
+							</div>
+
+							<p />
+						</c:forEach>
 					</div>
 					<div id="menu2" class="container tab-pane fade">
 						<br>
@@ -262,8 +383,7 @@
 										Contact</button>
 									<button type="button" class="btn btn-info btn-lg btn-block">Edit
 										About</button>
-									<button type="button" class="btn btn-info btn-lg btn-block">Old
-										Post List</button>
+
 									<button type="button" onClick="LogOut()"
 										class="btn btn-info btn-lg btn-block">LogOut</button>
 								</div>

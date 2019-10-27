@@ -111,15 +111,22 @@ public class PostServerlet extends HttpServlet {
 	private void listPost(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		List<Post> listPost = empDAO.selectAllPosts();
+		List<Post> listPostOld = empDAO.selectAllPostsOld();
 		
 		List<String> comments = new ArrayList<String>();
 		
 		for(Post post : listPost){		
-			comments = getCommentsByPostId(post.getPost_id());
+			comments = getCommentsByPostId(post.getPost_id()); 
 			post.setComments(empDAO.selectComments(post.getPost_id()));
 		}
 		
+		for(Post postold : listPostOld){		
+			comments = getCommentsByPostId(postold.getPost_id()); 
+			postold.setComments(empDAO.selectComments(postold.getPost_id()));
+		}
+		
 		request.setAttribute("listPost", listPost);
+		request.setAttribute("listPostOld", listPostOld);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("blog.jsp");
 		dispatcher.forward(request, response);
 	}
